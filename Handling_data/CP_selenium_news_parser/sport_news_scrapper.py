@@ -43,8 +43,8 @@ for link in all_links:
     if "https://sport24.ru/news/" in link.get_attribute("href"):
         news_links.append(link.get_attribute("href"))
 
-# Возьму первые 10 новостей
-news_links = news_links[:10]
+# Возьму первые 100 новостей
+# news_links = news_links[:100]
 
 # Открываю каждую ссылку новости и читаю из неё информацию
 

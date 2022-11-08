@@ -537,3 +537,5 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,pycharm,visualstudio
+Handling_data/preparing_dataset_for_segmentation_NN/xVal.npy
+Handling_data/preparing_dataset_for_segmentation_NN/yVal.npy
