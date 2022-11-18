@@ -1,16 +1,7 @@
 # Примечание - чтобы установить библиотеку pycurl выбрал виртуальное окружение labelimg с python 3.7.13
 
-# Тест pycurl с моими опциями
-
-''' 
-Я не уверен, что при парсинге изображений есть необходимость в Selenium
-Вероятно, можно обойтись pycurl
+# Не работает (60, 'SSL certificate problem: unable to get local issuer certificate')
 '''
-
-# Для парсинга
-# Нахождение изображений и взятия их ссылок
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 
 # Библиотека для использования команды cURL из Python
 # Позволит скачать изображения в файлы по подготовленным ссылкам
@@ -25,7 +16,7 @@ import time
 import requests
 # import pyautogui
 
-def search_yandex(search_query):
+def download(img_url):
     # Создаем объект для приема данных в формате последовательности байтов
     b_obj = BytesIO()
 
@@ -36,7 +27,7 @@ def search_yandex(search_query):
     cookies = pickle.load(open("cookies.pkl", "rb"))
     print(type(cookies))
 
-    crl.setopt(pycurl.COOKIELIST, cookies)
+    crl.setopt(pycurl.COOKIELIST, str(cookies))
 
     # Подстановка имени браузера в pycurl:
     user_agent = ""
@@ -46,11 +37,12 @@ def search_yandex(search_query):
     crl.setopt(pycurl.USERAGENT, user_agent)
 
     # Устанавливаем опцию источника
-    crl.setopt(crl.URL, 'https://yandex.ru/images/search?text={search_query}&from=tabbar') #ya.ru
+    crl.setopt(crl.URL, img_url) #ya.ru
 
     # Устанавливаем объект, в который будет направлен поток данных, который вернет сервер
     crl.setopt(crl.WRITEDATA, b_obj)
 
+    print(img_url)
     # Выполняем запрос
     crl.perform()
 
@@ -58,9 +50,14 @@ def search_yandex(search_query):
     crl.close()
 
     # Получаем содержимое в виде строки
-    get_body = b_obj.getvalue()
+    get_body = b_obj.getvalue().decode('utf8')
     print(get_body)
 
-items = search_yandex('octopuses')
-# print(items)
 
+
+with open('links.txt', 'r', encoding="utf-8") as file:
+    for line in file.readlines():
+        download(line.rstrip())
+        break
+
+'''

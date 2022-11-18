@@ -1,5 +1,8 @@
 # Примечание - чтобы установить библиотеку pycurl выбрал виртуальное окружение labelimg с python 3.7.13
 
+# Не работает. Отдаёт Captcha
+"""
+
 ''' 
 Я не уверен, что при парсинге изображений есть необходимость в Selenium
 Вероятно, можно обойтись pycurl
@@ -48,7 +51,7 @@ def search_yandex(search_query):
     crl.setopt(crl.URL, search_query)
 
     crl.setopt(crl.FOLLOWLOCATION, True)
-    
+
     # Устанавливаем объект, в который будет направлен поток данных, который вернет сервер
     crl.setopt(crl.WRITEDATA, b_obj)
 
@@ -56,62 +59,11 @@ def search_yandex(search_query):
     crl.perform()
     
     # Получаем содержимое в виде строки
-    get_body = b_obj.getvalue()
+    get_body = b_obj.getvalue().decode('utf8')
 
     print(get_body)
-
-    '''
-    browser = webdriver.Chrome()
-    search_url = f"https://yandex.ru/images/search?text={search_query}&from=tabbar"
-    images_url = []
-
-    current_ext = ['png', 'jpg', 'jpeg']
-
-    # Открываем браузер с нужной поисковой фразой
-    browser.get(search_url)
-    elements = browser.find_elements(By.CLASS_NAME, 'rg_i')
-    
-    count = 0
-    for e in elements:
-        # Кликаем на каждой картинке
-        e.click()
-        time.sleep(1)
-        element = browser.find_elements(By.CLASS_NAME, 'v4dQwb')
-
-        if count == 0:
-            big_img = element[0].find_element(By.CLASS_NAME, 'n3VNCb')
-        else:
-            big_img = element[1].find_element(By.CLASS_NAME, 'n3VNCb')
-
-        # Находим атрибут src и складываем ссылку на изображение в массив
-        url = big_img.get_attribute("src")
-
-        # Получаем расширение файла
-        ext = url.split('.')
-        if len(ext) < 2:
-            continue
-        
-        ext = ext[-1].lower()
-        if ext not in current_ext:
-            continue
-        
-        images_url.append(url)
-
-        # Сохраняем картинку в файл
-        response = requests.get(url)
-        if response.status_code == 200:
-            with open(f"images/search{count+1}.{ext}", "wb") as file:
-                file.write(response.content)
-
-        count += 1
-
-        # Останавливаемся, когда нашли 5 изображений
-        if count == 5:
-            break
-    return images_url
-    '''
-        
+    return 1
 
 items = search_yandex('Octopuses')
 print(items)
-
+"""
