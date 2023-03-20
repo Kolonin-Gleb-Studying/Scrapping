@@ -1,0 +1,15 @@
+Как сгенерировать ключи для подключения к серверу в MobaXterm Key Gen
+
+public key 1 for OpenSSH
+
+ssh-ed25519 AAAAasdfasdfasfgasdfasdfasdfasdfasdf
+
+Key fingerprint
+
+ssh-ed25519 255 SHA256:60asdfasdfasdfasdfasdfasdf
+
+Key comment
+
+eddsa-key-20230304
+
+Type of key to generate: EdDSA

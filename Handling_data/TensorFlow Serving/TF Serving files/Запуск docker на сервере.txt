@@ -1,0 +1,8 @@
+Запуск docker на сервере:
+
+-- 
+systemctl start docker
+
+-- Поставить docker в автозагрузку
+systemctl enable docker
+
